@@ -31,18 +31,15 @@ def login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.pwd.data
-        print(type(email), type(password))
         try:
             user_info = User.query.filter_by(email = email).first()
             if user_info is None:
                 flash('User not found')
-                print(1)
             elif user_info.check_password(password):
                 print(email, password)
                 login_user(user_info)
                 return redirect(url_for('index'))
             else:
-                print(2)
                 flash('Invalid password')
         except:
             print('DB error')
@@ -56,9 +53,7 @@ def singup():
     form = RegForm()
     email = form.email.data
     password = form.pwd.data
-    print(email, password)
     if form.validate_on_submit():
-        print(1)
         user = User(email=email).set_password(password)
         print(user)
         try:
