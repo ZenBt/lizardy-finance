@@ -36,7 +36,6 @@ def login():
             if user_info is None:
                 flash('User not found')
             elif user_info.check_password(password):
-                print(email, password)
                 login_user(user_info)
                 return redirect(url_for('index'))
             else:
