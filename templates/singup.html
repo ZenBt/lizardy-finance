@@ -5,6 +5,7 @@
 
 {% block form_info %}
 <form class="login100-form" action="/singup" method="post">
+    {{ form.hidden_tag() }}
 {% endblock form_info %}
 
 {% block form_title%}
