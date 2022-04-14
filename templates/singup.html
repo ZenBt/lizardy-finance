@@ -1,0 +1,32 @@
+{% extends 'login.html' %}
+{% block page_title %}
+    <title>Registration</title>
+{% endblock page_title %}
+
+{% block form_info %}
+<form class="login100-form" action="/singup" method="post">
+{% endblock form_info %}
+
+{% block form_title%}
+<span class="login100-form-title">
+    Registration
+</span>
+{% endblock form_title%}
+
+{% block btn %}
+<button class="login100-form-btn" name="reg" value="regdata">
+    Sing Up
+</button>
+{% endblock btn %}
+
+{% block btm_text %}
+<div class="text-center">
+    <span class="txt1">
+        Already have an account?
+    </span>
+
+    <a class="txt2" href="{{url_for('login')}}">
+        Login
+    </a>
+</div>
+{% endblock btm_text %}
