@@ -1,9 +1,10 @@
+from crypt import methods
 from flask import redirect, request, render_template, render_template, request, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from app import app
-from models import User
+from models import User, Expenses, Tags
 from models import db
-from forms import LoginForm, RegForm
+from forms import LoginForm, RegForm, AddExpense, AddTag
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -15,11 +16,23 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 @login_required
 def index():
-    return '''Yup
-<a href="/logout"> Logout </a>>'''
+    form = AddExpense()
+    form.tag.choices = [(tag.id, tag.tag)
+                        for tag in Tags.query.filter(Tags.user_id==current_user.id).order_by(Tags.tag)]
+    if form.validate_on_submit():
+        name = form.name.data
+        description = form.description.data or None
+        tag = form.tag.data
+        db.session.add(Expenses(
+            name=name,
+            description=description,
+            tag_id=tag,
+            user_id=current_user.id))
+        db.session.commit()
+    return render_template('index.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -54,7 +67,6 @@ def singup():
     password = form.pwd.data
     if form.validate_on_submit():
         user = User(email=email).set_password(password)
-        print(user)
         try:
             db.session.add(user)
             db.session.flush()

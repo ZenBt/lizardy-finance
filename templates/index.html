@@ -1,0 +1,50 @@
+{% extends 'login.html' %}
+
+{% block page_title %}
+<title>L/Finance</title>
+{% endblock page_title %}
+
+{% block content %}
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="login100-form" action="" method="post">
+                {{form.hidden_tag()}}
+                <div class="wrap-input100">
+                    <h3>Your expense</h3>
+                    {{form.name(class_='input100')}}
+                </div>
+                <div class="wrap-input100">
+                    <h3>Description (optional)</h3>
+                    {{form.description()}}
+                </div>
+                <div class="wrap-input100">
+                    <h3>Choose category</h3>
+                    {{form.tag()}}
+                </div>
+                {% block btn %}
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" name="sub" value="submit">
+                                Sumbit
+                            </button>
+                        </div>
+                    </div>
+                
+                <div class="text-center">
+                    <span class="txt1">
+                        Wanna leave us?
+                    </span>
+
+                    <a class="txt2" href="{{url_for('logout')}}">
+                        Go ahead
+                    </a>
+                </div>
+            </form>
+            {% endblock btn %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
