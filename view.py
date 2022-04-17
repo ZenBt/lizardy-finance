@@ -1,5 +1,4 @@
-from crypt import methods
-from flask import redirect, request, render_template, render_template, request, url_for, flash
+from flask import redirect, render_template, render_template, request, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from app import app
 from models import User, Expenses, Tags
