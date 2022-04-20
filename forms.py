@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Length
 
 class LoginForm(FlaskForm):
@@ -17,5 +17,9 @@ class AddTag(FlaskForm):
 class AddExpense(FlaskForm):
     name = StringField('ExpenseName', validators=[DataRequired()])
     description = TextAreaField('Description')
+    cost = IntegerField('Price', validators=[DataRequired()], render_kw={'min':'1'})
     tag = SelectField('Category', coerce=int)  
-        
+
+
+class AddTag(FlaskForm):
+    tag = StringField('Category', validators=[DataRequired()])     

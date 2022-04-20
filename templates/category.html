@@ -1,8 +1,4 @@
-{% extends 'login.html' %}
-
-{% block page_title %}
-<title>L/Finance</title>
-{% endblock page_title %}
+{% extends 'index.html' %}
 
 {% block content %}
 <div class="limiter">
@@ -11,23 +7,11 @@
             <form class="login100-form" action="" method="post">
                 {{form.hidden_tag()}}
                 <div class="wrap-input100">
-                    <h3>Your expense</h3>
-                    {{form.name(class_='input100')}}
+                    <h3>Your tag</h3>
+                    {{form.tag(class_='input100')}}
                 </div>
 
-                <div class="wrap-input100">
-                    <h3>Rubles spent</h3>
-                    {{form.cost(class_='input100')}}
-                </div>
-
-                <div class="wrap-input100">
-                    <h3>Description (optional)</h3>
-                    {{form.description()}}
-                </div>
-                <div class="wrap-input100">
-                    <h3>Choose category</h3>
-                    {{form.tag()}}
-                </div>
+                
                 {% block btn %}
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
@@ -52,12 +36,12 @@
         </div>
         <div class="wrap-login100">
         <div style="position: relative; text-align:center; margin-left: 5%">
-            {% if history %}
-            <h2 style="margin-bottom: 5%;">Last 20 spendings</h2>
+            {% if tags %}
+            <h2 style="margin-bottom: 5%;">Most popular tags</h2>
             
-            {% for spending in history %}
+            {% for tag in tags %}
         
-            <h3>{{spending.name}} - {{spending.cost}} rub.</h3>
+            <h3>{{tag.tag}}</h3>
         
             {% endfor %}
             {% endif%}
@@ -65,5 +49,4 @@
     </div>
    
 </div>
-
-{% endblock content %}
+{% endblock content%}

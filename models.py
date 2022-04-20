@@ -2,9 +2,11 @@ from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from flask_migrate import Migrate
 from app import app
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -34,6 +36,7 @@ class Tags(db.Model):
 class Expenses(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
+    cost = db.Column(db.Integer)
     description = db.Column(db.String(400), nullable=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

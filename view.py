@@ -1,5 +1,6 @@
-from flask import redirect, render_template, render_template, request, url_for, flash
+from flask import redirect, render_template, render_template, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from sqlalchemy import func
 from app import app
 from models import User, Expenses, Tags
 from models import db
@@ -21,17 +22,45 @@ def index():
     form = AddExpense()
     form.tag.choices = [(tag.id, tag.tag)
                         for tag in Tags.query.filter(Tags.user_id==current_user.id).order_by(Tags.tag)]
+    if not form.tag.choices:
+        return redirect(url_for('category'))
+    
     if form.validate_on_submit():
         name = form.name.data
         description = form.description.data or None
         tag = form.tag.data
+        cost = form.cost.data
         db.session.add(Expenses(
             name=name,
             description=description,
+            cost=cost,
             tag_id=tag,
             user_id=current_user.id))
         db.session.commit()
-    return render_template('index.html', form=form)
+        return redirect(url_for('index'))
+    history = Expenses.query.filter(Expenses.user_id==current_user.id).order_by(Expenses.date_time).all()[:20]
+    return render_template('index.html', form=form, history=history)
+
+
+@app.route('/add-category', methods=['POST', 'GET'])
+@login_required
+def category():
+    form = AddTag()
+    tags = Tags.query.with_entities(Tags.tag,
+                                     func.count(Tags.tag).label('amount')).group_by(Tags.tag).order_by('amount').all()
+    print(tags)
+    if form.validate_on_submit():
+        name_tag = form.tag.data
+        tag = Tags(tag=name_tag, user_id=current_user.id)
+        try:
+            db.session.add(tag)
+            db.session.flush()
+            db.session.commit()
+        except:
+            db.session.rollback()
+            print('DB error')
+        return redirect(url_for('category'))
+    return render_template('category.html', form=form, tags=tags)
 
 
 @app.route('/login', methods=['GET', 'POST'])

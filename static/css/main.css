@@ -131,6 +131,7 @@ div.text-center {
   
   .wrap-login100 {
     width: 390px;
+    height: 750px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -184,7 +185,11 @@ div.text-center {
     padding: 0 5px;
   }
 
-
+textarea {
+  width: 280px;
+  height: 80px;
+  resize: none;
+}
 
 /*------------------------------------------------------------------
 [ Button ]*/
