@@ -42,12 +42,18 @@ def index():
     return render_template('index.html', form=form, history=history)
 
 
+@app.route('/about/<int:spending>')
+def about(spending):
+    spending_info = Expenses.query.filter(Expenses.id==spending).first()
+    return render_template('purchase.html', spending_info=spending_info)
+
 @app.route('/add-category', methods=['POST', 'GET'])
 @login_required
 def category():
     form = AddTag()
     tags = Tags.query.with_entities(Tags.tag,
                                      func.count(Tags.tag)).group_by(Tags.tag).order_by(func.count(Tags.tag).desc()).all()
+    print(tags)
     if form.validate_on_submit():
         name_tag = form.tag.data
         tag = Tags(tag=name_tag, user_id=current_user.id)

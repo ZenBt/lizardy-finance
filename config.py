@@ -1,7 +1,5 @@
-import decouple
-
 class Configuration:
-    SECRET_KEY = decouple.config('SECRET_KEY')
-    DEBUG = decouple.config('DEBUG')
-    SQLALCHEMY_DATABASE_URI = decouple.config('SQLALCHEMY_DATABASE_URI')
+    SECRET_KEY = 'VERYSECRETKEY'
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://zenb:Qazwsx123@localhost/finance'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
