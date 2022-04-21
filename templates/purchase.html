@@ -1,0 +1,10 @@
+{% extends 'login.html' %}
+{% block content %}
+<h1>{{spending_info.name}}:</h1>
+<h3>Time of adding - {{spending_info.date_time}}</h3>
+<h3>Money spent - {{spending_info.cost}} rub.</h3>
+{% if spending_info.description %}
+<h3>description - {{spending_info.description}}</h3>
+{% endif %}
+<h3>Return to home page <a href="{{url_for('index')}}">(Press me)</a></h3>
+{% endblock content %}

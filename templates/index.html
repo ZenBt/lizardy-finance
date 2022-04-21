@@ -57,7 +57,7 @@
             
             {% for spending in history %}
         
-            <h3>{{spending.name}} - {{spending.cost}} rub.</h3>
+            <h3><a href="{{url_for('about', spending=spending.id)}}">{{spending.name}} - {{spending.cost}} rub.</a></h3>
         
             {% endfor %}
             {% endif%}
