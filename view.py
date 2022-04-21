@@ -1,6 +1,6 @@
 from flask import redirect, render_template, render_template, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from app import app
 from models import User, Expenses, Tags
 from models import db
@@ -47,8 +47,7 @@ def index():
 def category():
     form = AddTag()
     tags = Tags.query.with_entities(Tags.tag,
-                                     func.count(Tags.tag).label('amount')).group_by(Tags.tag).order_by('amount').all()
-    print(tags)
+                                     func.count(Tags.tag)).group_by(Tags.tag).order_by(func.count(Tags.tag).desc()).all()
     if form.validate_on_submit():
         name_tag = form.tag.data
         tag = Tags(tag=name_tag, user_id=current_user.id)
