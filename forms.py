@@ -17,7 +17,7 @@ class AddTag(FlaskForm):
 class AddExpense(FlaskForm):
     name = StringField('ExpenseName', validators=[DataRequired()])
     description = TextAreaField('Description')
-    cost = IntegerField('Price', validators=[DataRequired()], render_kw={'min':'1'})
+    cost = IntegerField('Price', validators=[DataRequired()], render_kw={'min':'1', 'max':'10000000000'})
     tag = SelectField('Category', coerce=int)  
 
 
