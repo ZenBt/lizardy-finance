@@ -40,7 +40,7 @@ class Expenses(db.Model):
     description = db.Column(db.String(400), nullable=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    date_time = db.Column(db.DateTime, default=date.today)
+    date_time = db.Column(db.Date, default=date.today)
     
     def __repr__(self) -> str:
         return f'Expence <name: {self.name}>, <owner: {self.user_id}>'
